@@ -1,15 +1,40 @@
-// --- Day 1: The Tyranny of the Rocket Equation ---
-// https://adventofcode.com/2019/day/1
+// --- Day 1: Report Repair ---
+// https://adventofcode.com/2020/day/1
 
-int solveA(Iterable<String> input) =>
-    input.map(int.parse).map(calcFuel).reduce((i1, i2) => i1 + i2);
+int solveA(Iterable<String> input) {
+  final list = input.map(int.parse).toList(growable: false);
 
-int solveB(Iterable<String> input) =>
-    input.map(int.parse).map(calcFuelRecursive).reduce((i1, i2) => i1 + i2);
+  for (var a = 0; a < list.length; a++) {
+    for (var b = 0; b < list.length; b++) {
+      if (a == b) {
+        continue;
+      }
 
-int calcFuel(int mass) => (mass / 3).floor() - 2;
+      if (list[a] + list[b] == 2020) {
+        return list[a] * list[b];
+      }
+    }
+  }
 
-int calcFuelRecursive(int mass) {
-  final result = calcFuel(mass);
-  return result > 0 ? result + calcFuelRecursive(result) : 0;
+  return 0;
+}
+
+int solveB(Iterable<String> input) {
+  final list = input.map(int.parse).toList(growable: false);
+
+  for (var a = 0; a < list.length; a++) {
+    for (var b = 0; b < list.length; b++) {
+      for (var c = 0; c < list.length; c++) {
+        if (a == b && b == c) {
+          continue;
+        }
+
+        if (list[a] + list[b] + list[c] == 2020) {
+          return list[a] * list[b] * list[c];
+        }
+      }
+    }
+  }
+
+  return 0;
 }
