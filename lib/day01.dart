@@ -16,7 +16,7 @@ int solveA(Iterable<String> input) {
     }
   }
 
-  return 0;
+  throw Exception('No solution found!');
 }
 
 int solveB(Iterable<String> input) {
@@ -24,8 +24,12 @@ int solveB(Iterable<String> input) {
 
   for (var a = 0; a < list.length; a++) {
     for (var b = 0; b < list.length; b++) {
+      if (a == b) {
+        continue;
+      }
+
       for (var c = 0; c < list.length; c++) {
-        if (a == b && b == c) {
+        if (a == c || b == c) {
           continue;
         }
 
@@ -36,5 +40,5 @@ int solveB(Iterable<String> input) {
     }
   }
 
-  return 0;
+  throw Exception('No solution found!');
 }
