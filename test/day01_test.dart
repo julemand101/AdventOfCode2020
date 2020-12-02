@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:test/test.dart';
 import 'package:advent_of_code_2020/day01.dart';
 
-const String dataFilePath = 'test/data/day01.txt';
+final input = File('test/data/day01.txt').readAsLinesSync();
 
 void main() {
   group('Part One', () {
@@ -14,7 +14,7 @@ void main() {
           equals(514579));
     });
     test('Solution', () {
-      expect(solveA(File(dataFilePath).readAsLinesSync()), equals(972576));
+      expect(solveA(input), equals(972576));
     });
   });
   group('Part Two', () {
@@ -23,7 +23,7 @@ void main() {
           equals(241861950));
     });
     test('Solution', () {
-      expect(solveB(File(dataFilePath).readAsLinesSync()), equals(199300880));
+      expect(solveB(input), equals(199300880));
     });
   });
 }
