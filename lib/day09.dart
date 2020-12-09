@@ -1,69 +1,55 @@
 // --- Day 8: Handheld Halting ---
 // https://adventofcode.com/2020/day/8
 
-final instructionRegExp =
-    RegExp(r'(?<operation>acc|jmp|nop) (?<argument>[+-]\d+)');
+import 'dart:math';
 
-class Result {
-  final bool programTerminated;
-  final int accumulator;
+int solveA(Iterable<String> input, {int preambleSize = 25}) =>
+    findFirstWrongNumber(
+        input.map(int.parse).toList(growable: false), preambleSize);
 
-  const Result(this.accumulator, this.programTerminated);
-}
+int solveB(Iterable<String> input, {int preambleSize = 25}) {
+  final list = input.map(int.parse).toList(growable: false);
+  final firstWrongNumber = findFirstWrongNumber(list, preambleSize);
 
-int solveA(List<String> input) => run(input).accumulator;
+  for (var i = 0; i < list.length; i++) {
+    var sum = list[i], smallest = sum, biggest = sum;
 
-int solveB(List<String> input) {
-  final program = input.toList(growable: false); // input are not modifiable
+    for (var j = i + 1; j < list.length; j++) {
+      final number = list[j];
 
-  for (var i = 0; i < program.length; i++) {
-    final line = program[i];
+      smallest = min(smallest, number);
+      biggest = max(biggest, number);
+      sum += number;
 
-    if (line.startsWith('jmp')) {
-      program[i] = line.replaceFirst('jmp', 'nop');
-    } else if (line.startsWith('nop')) {
-      program[i] = line.replaceFirst('nop', 'jmp');
-    } else {
-      continue;
-    }
-
-    final result = run(program);
-
-    if (result.programTerminated) {
-      return result.accumulator;
-    } else {
-      program[i] = line;
+      if (sum == firstWrongNumber) {
+        return smallest + biggest;
+      } else if (sum > firstWrongNumber) {
+        break;
+      }
     }
   }
 
-  throw Exception('Did not found any result!');
+  throw Exception('Did not found the answer!');
 }
 
-Result run(List<String> input) {
-  var accumulator = 0;
-  var lineOfExecution = 0;
-  final visitedLines = <int>{};
-
-  while (lineOfExecution >= 0 && lineOfExecution < input.length) {
-    if (!visitedLines.add(lineOfExecution)) {
-      return Result(accumulator, false);
-    }
-
-    final match = instructionRegExp.firstMatch(input[lineOfExecution])!;
-    final operation = match.namedGroup('operation')!;
-    final argument = int.parse(match.namedGroup('argument')!);
-
-    if (operation == 'acc') {
-      accumulator += argument;
-      lineOfExecution++;
-    } else if (operation == 'jmp') {
-      lineOfExecution += argument;
-    } else if (operation == 'nop') {
-      lineOfExecution++;
-    } else {
-      throw Exception('Could not parse: ${input[lineOfExecution]}');
+int findFirstWrongNumber(List<int> list, int preambleSize) {
+  for (var i = preambleSize; i < list.length - 1; i++) {
+    if (!validNumber(list, i - preambleSize, i, list[i])) {
+      return list[i];
     }
   }
 
-  return Result(accumulator, true);
+  throw Exception('Could not find any wrong numbers!');
+}
+
+bool validNumber(List<int> list, int preStart, int preEnd, int number) {
+  for (var i = preStart; i < preEnd; i++) {
+    for (var j = i + 1; j < preEnd; j++) {
+      if (list[i] + list[j] == number) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
