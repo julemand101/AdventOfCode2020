@@ -1,6 +1,7 @@
-// --- Day 8: Handheld Halting ---
-// https://adventofcode.com/2020/day/8
+// --- Day 9: Encoding Error ---
+// https://adventofcode.com/2020/day/9
 
+import 'dart:collection';
 import 'dart:math';
 
 int solveA(Iterable<String> input, {int preambleSize = 25}) =>
@@ -10,22 +11,19 @@ int solveA(Iterable<String> input, {int preambleSize = 25}) =>
 int solveB(Iterable<String> input, {int preambleSize = 25}) {
   final list = input.map(int.parse).toList(growable: false);
   final firstWrongNumber = findFirstWrongNumber(list, preambleSize);
+  final contiguousRange = Queue<int>();
+  var sum = 0;
 
-  for (var i = 0; i < list.length; i++) {
-    var sum = list[i], smallest = sum, biggest = sum;
+  for (final value in list) {
+    sum += value;
+    contiguousRange.add(value);
 
-    for (var j = i + 1; j < list.length; j++) {
-      final number = list[j];
+    while (sum > firstWrongNumber) {
+      sum -= contiguousRange.removeFirst();
+    }
 
-      smallest = min(smallest, number);
-      biggest = max(biggest, number);
-      sum += number;
-
-      if (sum == firstWrongNumber) {
-        return smallest + biggest;
-      } else if (sum > firstWrongNumber) {
-        break;
-      }
+    if (sum == firstWrongNumber) {
+      return contiguousRange.reduce(min) + contiguousRange.reduce(max);
     }
   }
 
