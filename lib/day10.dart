@@ -17,3 +17,18 @@ int solveA(Iterable<String> input) {
 
   return oneJolt * threeJolt;
 }
+
+int solveB(Iterable<String> input) {
+  final list = [0, ...input.map(int.parse)]..sort();
+  list.add(list.last + 3);
+  final sumList = List.filled(list.length, 0, growable: false);
+
+  sumList[0] = 1;
+  for (var i = 1; i < list.length; i++) {
+    for (var j = i - 1; j >= 0 && list[i] - list[j] <= 3; j--) {
+      sumList[i] += sumList[j];
+    }
+  }
+
+  return sumList.last;
+}
