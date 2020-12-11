@@ -7,7 +7,6 @@ int solveA(Iterable<String> input) {
 
   do {
     anyUpdate = false;
-
     final prevLayout = SeatLayout.copy(seatLayout);
 
     for (var y = 0; y < seatLayout.height; y++) {
@@ -32,6 +31,41 @@ int solveA(Iterable<String> input) {
   return seatLayout.seatsOccupied;
 }
 
+int solveB(Iterable<String> input) {
+  final seatLayout = SeatLayout.parse(input);
+  var anyUpdate = false;
+
+  do {
+    anyUpdate = false;
+    final prevLayout = SeatLayout.copy(seatLayout);
+
+    for (var y = 0; y < seatLayout.height; y++) {
+      for (var x = 0; x < seatLayout.length; x++) {
+        final prevState = prevLayout.get(x, y);
+
+        if (prevState == SeatState.empty) {
+          if (!prevLayout
+              .firstSeatTheyCanSeeStates(x, y)
+              .contains(SeatState.occupied)) {
+            seatLayout.set(x, y, SeatState.occupied);
+            anyUpdate = true;
+          }
+        } else if (prevState == SeatState.occupied) {
+          if (prevLayout
+                  .firstSeatTheyCanSeeStates(x, y)
+                  .count(SeatState.occupied) >=
+              5) {
+            seatLayout.set(x, y, SeatState.empty);
+            anyUpdate = true;
+          }
+        }
+      }
+    }
+  } while (anyUpdate);
+
+  return seatLayout.seatsOccupied;
+}
+
 enum SeatState { floor, empty, occupied }
 
 class Grid<T> {
@@ -40,8 +74,6 @@ class Grid<T> {
 
   Grid.filled(this.length, this.height, T value)
       : list = List.filled(length * height, value, growable: false);
-  Grid.generate(this.length, this.height, T Function(int) generate)
-      : list = List.generate(length * height, generate, growable: false);
   Grid.copy(Grid<T> grid)
       : this.length = grid.length,
         this.height = grid.height,
@@ -51,20 +83,6 @@ class Grid<T> {
   void set(int x, int y, T value) => list[_getPos(x, y)] = value;
 
   int _getPos(int x, int y) => x + (y * length);
-
-  @override
-  String toString() {
-    final sb = StringBuffer();
-
-    for (var y = 0; y < height; y++) {
-      for (var x = 0; x < length; x++) {
-        sb.write(get(x, y) ?? ' ');
-      }
-      sb.writeln();
-    }
-
-    return sb.toString();
-  }
 }
 
 class SeatLayout extends Grid<SeatState> {
@@ -109,16 +127,134 @@ class SeatLayout extends Grid<SeatState> {
   }
 
   Iterable<SeatState> neighbourStates(int x, int y) sync* {
-    yield get(x - 1, y - 1);
-    yield get(x, y - 1);
-    yield get(x + 1, y - 1);
+    for (var _y = y - 1; _y <= y + 1; _y++) {
+      for (var _x = x - 1; _x <= x + 1; _x++) {
+        if (_x == x && _y == y) continue;
+        yield get(_x, _y);
+      }
+    }
+  }
 
-    yield get(x - 1, y);
-    yield get(x + 1, y);
+  Iterable<SeatState> firstSeatTheyCanSeeStates(int x, int y) sync* {
+    // left up
+    var found = false;
+    for (var _x = x - 1, _y = y - 1; _x >= 0 && _y >= 0; _x--, _y--) {
+      final state = get(_x, _y);
 
-    yield get(x - 1, y + 1);
-    yield get(x, y + 1);
-    yield get(x + 1, y + 1);
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // up
+    found = false;
+    for (var _y = y - 1; _y >= 0; _y--) {
+      final state = get(x, _y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // right up
+    found = false;
+    for (var _x = x + 1, _y = y - 1; _x < length && _y >= 0; _x++, _y--) {
+      final state = get(_x, _y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // right
+    found = false;
+    for (var _x = x + 1; _x < length; _x++) {
+      final state = get(_x, y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // right down
+    found = false;
+    for (var _x = x + 1, _y = y + 1; _x < length && _y < height; _x++, _y++) {
+      final state = get(_x, _y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // down
+    found = false;
+    for (var _y = y + 1; _y < height; _y++) {
+      final state = get(x, _y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // left down
+    found = false;
+    for (var _x = x - 1, _y = y + 1; _x >= 0 && _y < height; _x--, _y++) {
+      final state = get(_x, _y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
+
+    // left
+    found = false;
+    for (var _x = x - 1; _x >= 0; _x--) {
+      final state = get(_x, y);
+
+      if (state != SeatState.floor) {
+        found = true;
+        yield state;
+        break;
+      }
+    }
+    if (!found) {
+      yield SeatState.floor;
+    }
   }
 
   @override
@@ -134,6 +270,30 @@ class SeatLayout extends Grid<SeatState> {
 
   int get seatsOccupied =>
       list.where((seat) => seat == SeatState.occupied).length;
+
+  @override
+  String toString() {
+    final sb = StringBuffer();
+
+    for (var y = 0; y < height; y++) {
+      for (var x = 0; x < length; x++) {
+        switch (get(x, y)) {
+          case SeatState.floor:
+            sb.write('.');
+            break;
+          case SeatState.empty:
+            sb.write('L');
+            break;
+          case SeatState.occupied:
+            sb.write('#');
+            break;
+        }
+      }
+      sb.writeln();
+    }
+
+    return sb.toString();
+  }
 }
 
 extension CountExtension<T> on Iterable<T> {

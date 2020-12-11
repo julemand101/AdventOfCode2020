@@ -109,4 +109,121 @@ void main() {
       expect(solveA(input), equals(2296));
     });
   });
+  group('Part Two', () {
+    test('Example 1a', () {
+      expect(
+          solveB(const [
+            'L.LL.LL.LL',
+            'LLLLLLL.LL',
+            'L.L.L..L..',
+            'LLLL.LL.LL',
+            'L.LL.LL.LL',
+            'L.LLLLL.LL',
+            '..L.L.....',
+            'LLLLLLLLLL',
+            'L.LLLLLL.L',
+            'L.LLLLL.LL'
+          ]),
+          equals(26));
+    });
+    test('Example 1b', () {
+      expect(
+          solveB(const [
+            '#.##.##.##',
+            '#######.##',
+            '#.#.#..#..',
+            '####.##.##',
+            '#.##.##.##',
+            '#.#####.##',
+            '..#.#.....',
+            '##########',
+            '#.######.#',
+            '#.#####.##'
+          ]),
+          equals(26));
+    });
+    test('Example 1c', () {
+      expect(
+          solveB(const [
+            '#.LL.LL.L#',
+            '#LLLLLL.LL',
+            'L.L.L..L..',
+            'LLLL.LL.LL',
+            'L.LL.LL.LL',
+            'L.LLLLL.LL',
+            '..L.L.....',
+            'LLLLLLLLL#',
+            '#.LLLLLL.L',
+            '#.LLLLL.L#'
+          ]),
+          equals(26));
+    });
+    test('Example 1d', () {
+      expect(
+          solveB(const [
+            '#.L#.##.L#',
+            '#L#####.LL',
+            'L.#.#..#..',
+            '##L#.##.##',
+            '#.##.#L.##',
+            '#.#####.#L',
+            '..#.#.....',
+            'LLL####LL#',
+            '#.L#####.L',
+            '#.L####.L#'
+          ]),
+          equals(26));
+    });
+    test('Example 1e', () {
+      expect(
+          solveB(const [
+            '#.L#.L#.L#',
+            '#LLLLLL.LL',
+            'L.L.L..#..',
+            '##LL.LL.L#',
+            'L.LL.LL.L#',
+            '#.LLLLL.LL',
+            '..L.L.....',
+            'LLLLLLLLL#',
+            '#.LLLLL#.L',
+            '#.L#LL#.L#'
+          ]),
+          equals(26));
+    });
+    test('Example 1f', () {
+      expect(
+          solveB(const [
+            '#.L#.L#.L#',
+            '#LLLLLL.LL',
+            'L.L.L..#..',
+            '##L#.#L.L#',
+            'L.L#.#L.L#',
+            '#.L####.LL',
+            '..#.#.....',
+            'LLL###LLL#',
+            '#.LLLLL#.L',
+            '#.L#LL#.L#'
+          ]),
+          equals(26));
+    });
+    test('Example 1g', () {
+      expect(
+          solveB(const [
+            '#.L#.L#.L#',
+            '#LLLLLL.LL',
+            'L.L.L..#..',
+            '##L#.#L.L#',
+            'L.L#.LL.L#',
+            '#.LLLL#.LL',
+            '..#.L.....',
+            'LLL###LLL#',
+            '#.LLLLL#.L',
+            '#.L#LL#.L#'
+          ]),
+          equals(26));
+    });
+    test('Solution', () {
+      expect(solveB(input), equals(2089));
+    });
+  });
 }
