@@ -16,4 +16,12 @@ void main() {
       expect(solveA(input), equals(364));
     });
   });
+  group('Part Two', () {
+    test('Example 2', () {
+      expect(solveB(const ['F10', 'N3', 'F7', 'R90', 'F11']), equals(286));
+    });
+    test('Solution', () {
+      expect(solveB(input), equals(39518));
+    });
+  });
 }
