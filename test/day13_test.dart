@@ -16,4 +16,27 @@ void main() {
       expect(solveA(input), equals(3997));
     });
   });
+  group('Part Two', () {
+    test('Example 1', () {
+      expect(solveB(const ['IGNORE', '7,13,x,x,59,x,31,19']), equals(1068781));
+    });
+    test('Example 2', () {
+      expect(solveB(const ['IGNORE', '17,x,13,19']), equals(3417));
+    });
+    test('Example 3', () {
+      expect(solveB(const ['IGNORE', '67,7,59,61']), equals(754018));
+    });
+    test('Example 4', () {
+      expect(solveB(const ['IGNORE', '67,x,7,59,61']), equals(779210));
+    });
+    test('Example 5', () {
+      expect(solveB(const ['IGNORE', '67,7,x,59,61']), equals(1261476));
+    });
+    test('Example 6', () {
+      expect(solveB(const ['IGNORE', '1789,37,47,1889']), equals(1202161486));
+    });
+    test('Solution', () {
+      expect(solveB(input), equals(500033211739354));
+    });
+  });
 }
