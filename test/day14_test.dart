@@ -1,0 +1,26 @@
+// --- Day 14: Docking Data ---
+// https://adventofcode.com/2020/day/14
+
+import 'dart:io';
+import 'package:test/test.dart';
+import 'package:advent_of_code_2020/day14.dart';
+
+final input = File('test/data/day14.txt').readAsLinesSync();
+
+void main() {
+  group('Part One', () {
+    test('Example 1', () {
+      expect(
+          solveA(const [
+            'mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X',
+            'mem[8] = 11',
+            'mem[7] = 101',
+            'mem[8] = 0]'
+          ]),
+          equals(165));
+    });
+    test('Solution', () {
+      expect(solveA(input), equals(14722016054794));
+    });
+  });
+}
