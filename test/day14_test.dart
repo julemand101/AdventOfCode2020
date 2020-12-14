@@ -23,4 +23,19 @@ void main() {
       expect(solveA(input), equals(14722016054794));
     });
   });
+  group('Part One', () {
+    test('Example 1', () {
+      expect(
+          solveB(const [
+            'mask = 000000000000000000000000000000X1001X',
+            'mem[42] = 100',
+            'mask = 00000000000000000000000000000000X0XX',
+            'mem[26] = 1'
+          ]),
+          equals(208));
+    });
+    test('Solution', () {
+      expect(solveB(input), equals(3618217244644));
+    });
+  });
 }
