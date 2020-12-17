@@ -31,4 +31,9 @@ void main() {
       expect(solveA(input), equals(25984));
     });
   });
+  group('Part Two', () {
+    test('Solution', () {
+      expect(solveB(input), equals(1265347500049));
+    });
+  });
 }
