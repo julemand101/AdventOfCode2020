@@ -74,8 +74,3 @@ class Point extends Equatable {
   @override
   bool? get stringify => true;
 }
-
-void main() {
-  const p = Point([0, 0, 0, 0]);
-  print(p.neighbours.length);
-}
