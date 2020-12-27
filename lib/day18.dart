@@ -3,46 +3,106 @@
 
 int solveA(Iterable<String> input) => input
     .map((e) => e.replaceAll(' ', ''))
-    .map(calculate)
+    .map(calculateA)
     .reduce((a, b) => a + b);
+
+int solveB(Iterable<String> input) => input
+    .map((e) => e.replaceAll(' ', ''))
+    .map(calculateB)
+    .reduce((a, b) => a + b);
+
+abstract class Token {
+  const Token();
+}
+
+class Value extends Token {
+  final int value;
+
+  const Value(this.value);
+
+  @override
+  String toString() => 'Value($value)';
+
+  Value operator +(Value other) => Value(value + other.value);
+  Value operator *(Value other) => Value(value * other.value);
+}
 
 enum Mode { addition, multiplication }
 
-int calculate(String input) {
-  var sum = 0;
-  var mode = Mode.addition;
+class Operator extends Token {
+  final Mode mode;
 
-  for (var i = 0; i < input.length; i++) {
-    final char = input[i];
+  const Operator(this.mode);
+
+  @override
+  String toString() => 'Operator($mode)';
+}
+
+int calculateA(String line) => calculate(line, partB: false);
+int calculateB(String line) => calculate(line, partB: true);
+
+int calculate(String line, {required bool partB}) {
+  final tokens = <Token>[];
+
+  for (var i = 0; i < line.length; i++) {
+    final char = line[i];
 
     if (char == '(') {
-      final sb = StringBuffer(char);
+      final sb = StringBuffer();
 
       i++;
-      for (var brackets = 1; brackets != 0 && i < input.length; i++) {
-        final subChar = input[i];
-        sb.write(subChar);
+      for (var brackets = 1; brackets != 0 && i < line.length; i++) {
+        final subChar = line[i];
 
         if (subChar == '(') {
           brackets++;
         } else if (subChar == ')') {
           brackets--;
         }
+
+        if (brackets != 0) {
+          sb.write(subChar);
+        }
       }
       i--;
 
-      // remove first and last bracket before calculating
-      final subSum = calculate(sb.toString().substring(1, sb.length - 1));
-      sum = mode == Mode.addition ? sum + subSum : sum * subSum;
+      tokens.add(Value(calculate(sb.toString(), partB: partB)));
     } else if (char == '+') {
-      mode = Mode.addition;
+      tokens.add(const Operator(Mode.addition));
     } else if (char == '*') {
-      mode = Mode.multiplication;
+      tokens.add(const Operator(Mode.multiplication));
     } else {
-      final number = int.parse(char);
-      sum = mode == Mode.addition ? sum + number : sum * number;
+      tokens.add(Value(int.parse(char)));
     }
   }
 
-  return sum;
+  while (tokens.length != 1) {
+    int indexOperator;
+
+    if (partB) {
+      indexOperator = tokens.indexWhere(
+          (token) => token is Operator && token.mode == Mode.addition);
+
+      if (indexOperator == -1) {
+        indexOperator = tokens.indexWhere(
+            (token) => token is Operator && token.mode == Mode.multiplication);
+      }
+    } else {
+      indexOperator = tokens.indexWhere((element) => element is Operator);
+    }
+
+    final aValue = tokens[indexOperator - 1] as Value;
+    final bValue = tokens[indexOperator + 1] as Value;
+    final operator = tokens[indexOperator] as Operator;
+
+    if (operator.mode == Mode.addition) {
+      tokens.replaceRange(
+          indexOperator - 1, indexOperator + 2, [aValue + bValue]);
+    } else {
+      tokens.replaceRange(
+          indexOperator - 1, indexOperator + 2, [aValue * bValue]);
+    }
+  }
+
+  return tokens.cast<Value>().first.value;
 }

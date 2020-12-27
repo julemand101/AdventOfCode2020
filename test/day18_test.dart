@@ -33,4 +33,29 @@ void main() {
       expect(solveA(input), equals(2743012121210));
     });
   });
+  group('Part Two', () {
+    test('Example 1', () {
+      expect(solveB(const ['1 + 2 * 3 + 4 * 5 + 6']), equals(231));
+    });
+    test('Example 2', () {
+      expect(solveB(const ['1 + (2 * 3) + (4 * (5 + 6))']), equals(51));
+    });
+    test('Example 3', () {
+      expect(solveB(const ['2 * 3 + (4 * 5)']), equals(46));
+    });
+    test('Example 4', () {
+      expect(solveB(const ['5 + (8 * 3 + 9 + 3 * 4 * 3)']), equals(1445));
+    });
+    test('Example 5', () {
+      expect(solveB(const ['5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))']),
+          equals(669060));
+    });
+    test('Example 6', () {
+      expect(solveB(const ['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2']),
+          equals(23340));
+    });
+    test('Solution', () {
+      expect(solveB(input), equals(65658760783597));
+    });
+  });
 }
