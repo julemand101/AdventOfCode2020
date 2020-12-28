@@ -3,12 +3,15 @@
 
 int solveA(Iterable<String> input) => input
     .map((e) => e.replaceAll(' ', ''))
-    .map(calculateA)
+    .map((line) => calculate(line, (_) => 1))
     .reduce((a, b) => a + b);
 
 int solveB(Iterable<String> input) => input
     .map((e) => e.replaceAll(' ', ''))
-    .map(calculateB)
+    .map((line) => calculate(line, (tokens) {
+          final index = tokens.indexOf(const Operator(Mode.addition));
+          return index != -1 ? index : 1;
+        }))
     .reduce((a, b) => a + b);
 
 abstract class Token {
@@ -38,10 +41,7 @@ class Operator extends Token {
   String toString() => 'Operator($mode)';
 }
 
-int calculateA(String line) => calculate(line, partB: false);
-int calculateB(String line) => calculate(line, partB: true);
-
-int calculate(String line, {required bool partB}) {
+int calculate(String line, int Function(List<Token> tokens) findOperator) {
   final tokens = <Token>[];
 
   for (var i = 0; i < line.length; i++) {
@@ -66,7 +66,7 @@ int calculate(String line, {required bool partB}) {
       }
       i--;
 
-      tokens.add(Value(calculate(sb.toString(), partB: partB)));
+      tokens.add(Value(calculate(sb.toString(), findOperator)));
     } else if (char == '+') {
       tokens.add(const Operator(Mode.addition));
     } else if (char == '*') {
@@ -77,20 +77,7 @@ int calculate(String line, {required bool partB}) {
   }
 
   while (tokens.length != 1) {
-    int indexOperator;
-
-    if (partB) {
-      indexOperator = tokens.indexWhere(
-          (token) => token is Operator && token.mode == Mode.addition);
-
-      if (indexOperator == -1) {
-        indexOperator = tokens.indexWhere(
-            (token) => token is Operator && token.mode == Mode.multiplication);
-      }
-    } else {
-      indexOperator = tokens.indexWhere((element) => element is Operator);
-    }
-
+    final indexOperator = findOperator(tokens);
     final aValue = tokens[indexOperator - 1] as Value;
     final bValue = tokens[indexOperator + 1] as Value;
     final operator = tokens[indexOperator] as Operator;
