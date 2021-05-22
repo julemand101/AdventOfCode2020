@@ -1,7 +1,7 @@
 // --- Day 2: Password Philosophy ---
 // https://adventofcode.com/2020/day/2
 
-int solveA(Iterable<String> input) => input.where((final String line) {
+int solveA(Iterable<String> input) => input.where((final line) {
       final match = _regExp.firstMatch(line)!;
       final min = int.parse(match.namedGroup('min')!);
       final max = int.parse(match.namedGroup('max')!);
@@ -14,7 +14,7 @@ int solveA(Iterable<String> input) => input.where((final String line) {
           numberOfTimesLetterOccurInPassword <= max;
     }).length;
 
-int solveB(Iterable<String> input) => input.where((final String line) {
+int solveB(Iterable<String> input) => input.where((final line) {
       final match = _regExp.firstMatch(line)!;
       final pos1 = int.parse(match.namedGroup('min')!) - 1; // 1 = first letter
       final pos2 = int.parse(match.namedGroup('max')!) - 1; //
