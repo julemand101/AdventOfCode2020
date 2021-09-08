@@ -2,8 +2,8 @@
 // https://adventofcode.com/2020/day/18
 
 import 'dart:io';
-import 'package:test/test.dart';
 import 'package:advent_of_code_2020/day18.dart';
+import 'package:test/test.dart';
 
 final input = File('test/data/day18.txt').readAsLinesSync();
 

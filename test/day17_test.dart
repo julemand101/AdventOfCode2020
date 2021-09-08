@@ -1,8 +1,8 @@
 // --- Day 17: Conway Cubes ---
 // https://adventofcode.com/2020/day/17
 
-import 'package:test/test.dart';
 import 'package:advent_of_code_2020/day17.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Part One', () {

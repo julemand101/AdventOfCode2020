@@ -1,8 +1,8 @@
 // --- Day 15: Rambunctious Recitation ---
 // https://adventofcode.com/2020/day/15
 
-import 'package:test/test.dart';
 import 'package:advent_of_code_2020/day15.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Part One', () {
