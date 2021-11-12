@@ -2,60 +2,72 @@
 // https://adventofcode.com/2020/day/20
 
 int solveA(Iterable<String> input) {
-  parseInput(input).map((e) => Tile.parse(e)).forEach(print);
-  return 0;
+  final tiles = [
+    for (final splitInput in parseInput(input)) Tile.parse(splitInput)
+  ];
+
+  final countMap = <int, int>{};
+
+  for (final tileA in tiles) {
+    for (final tileB in tiles) {
+      if (tileA.tileId != tileB.tileId &&
+          tileA.sides.any(tileB.sides.contains)) {
+        countMap.update(tileA.tileId, (v) => v + 1, ifAbsent: () => 1);
+      }
+    }
+  }
+
+  return countMap.entries
+      .where((entry) => entry.value == 2)
+      .fold(1, (result, entry) => result * entry.key);
 }
 
 class Tile {
   final int tileId;
-  final List<bool> top, left, right, bottom;
+  final Set<int> sides;
 
-  const Tile(this.tileId, this.top, this.right, this.bottom, this.left);
+  const Tile(
+    this.tileId, {
+    required this.sides,
+  });
 
   factory Tile.parse(List<String> input) {
     // Tile 2311:
     final tileId = int.parse(input.first.substring(5, 9));
     final top = _asBoolList(input[1]);
     final bottom = _asBoolList(input.last);
-    final left = input
-        .skip(1)
-        .map((line) => line.codeUnits.first == 35)
-        .toList(growable: false);
-    final right = input
-        .skip(1)
-        .map((line) => line.codeUnits.last == 35)
-        .toList(growable: false);
+    final left = [...input.skip(1).map((line) => line.codeUnits.first == 35)];
+    final right = [...input.skip(1).map((line) => line.codeUnits.last == 35)];
 
-    return Tile(tileId, top, right, bottom, left);
+    return Tile(
+      tileId,
+      sides: {
+        _asInt(top),
+        _asInt(top.reversed),
+        _asInt(bottom),
+        _asInt(bottom.reversed),
+        _asInt(left),
+        _asInt(left.reversed),
+        _asInt(right),
+        _asInt(right.reversed),
+      },
+    );
   }
-
-  void flipVertically() {}
-
-  void flipHorizontally() {}
-
-  void rotate90DegreesRight() {}
 
   // # = 35
   static List<bool> _asBoolList(String line) =>
       line.codeUnits.map((char) => char == 35).toList(growable: false);
 
-  @override
-  String toString() {
-    final sb = StringBuffer('Tile ID: $tileId')..writeln();
+  static int _asInt(Iterable<bool> booleans) {
+    var val = 0;
 
-    sb.writeln(toStringBoolList(top));
-
-    for (var i = 1; i < left.length - 1; i++) {
-      sb.writeln('${left[i] ? '#' : '.'}        ${right[i] ? '#' : '.'}');
+    for (final boolean in booleans) {
+      val ^= boolean ? 1 : 0;
+      val <<= 1;
     }
 
-    sb.writeln(toStringBoolList(bottom));
-
-    return sb.toString();
+    return val >> 1;
   }
-
-  String toStringBoolList(List<bool> boolList) =>
-      boolList.map((e) => e ? '#' : '.').join();
 }
 
 Iterable<List<String>> parseInput(Iterable<String> input) sync* {

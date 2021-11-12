@@ -123,7 +123,7 @@ void main() {
           equals(20899048083289));
     });
     test('Solution', () {
-      expect(solveA(input), equals(-1));
+      expect(solveA(input), equals(29125888761511));
     });
-  }, skip: true);
+  });
 }
