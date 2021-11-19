@@ -6,27 +6,29 @@ int solveA(Iterable<String> input) {
     for (final splitInput in parseInput(input)) Tile.parse(splitInput)
   ];
 
-  final countMap = <int, int>{};
-
   for (final tileA in tiles) {
     for (final tileB in tiles) {
       if (tileA.tileId != tileB.tileId &&
           tileA.sides.any(tileB.sides.contains)) {
-        countMap.update(tileA.tileId, (v) => v + 1, ifAbsent: () => 1);
+        tileA.neighbours.add(tileB);
       }
     }
   }
 
-  return countMap.entries
-      .where((entry) => entry.value == 2)
-      .fold(1, (result, entry) => result * entry.key);
+  return tiles
+      .where((tile) => tile.neighbours.length == 2) // Corner tiles
+      .fold(1, (result, tile) => result * tile.tileId);
 }
 
 class Tile {
+  // # = 35
+  static const hashTagChar = 35;
+
   final int tileId;
   final Set<int> sides;
+  final Set<Tile> neighbours = {};
 
-  const Tile(
+  Tile(
     this.tileId, {
     required this.sides,
   });
@@ -36,8 +38,14 @@ class Tile {
     final tileId = int.parse(input.first.substring(5, 9));
     final top = _asBoolList(input[1]);
     final bottom = _asBoolList(input.last);
-    final left = [...input.skip(1).map((line) => line.codeUnits.first == 35)];
-    final right = [...input.skip(1).map((line) => line.codeUnits.last == 35)];
+    final left = input
+        .skip(1)
+        .map((line) => line.codeUnits.first == hashTagChar)
+        .toList(growable: false);
+    final right = input
+        .skip(1)
+        .map((line) => line.codeUnits.last == hashTagChar)
+        .toList(growable: false);
 
     return Tile(
       tileId,
@@ -54,10 +62,11 @@ class Tile {
     );
   }
 
-  // # = 35
   static List<bool> _asBoolList(String line) =>
-      line.codeUnits.map((char) => char == 35).toList(growable: false);
+      line.codeUnits.map((char) => char == hashTagChar).toList(growable: false);
 
+  // A side can be represented as a number by using the pixel values as bits
+  // This optimization makes it a lot faster to compare sides between two tiles.
   static int _asInt(Iterable<bool> booleans) {
     var val = 0;
 
