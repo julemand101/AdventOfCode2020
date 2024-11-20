@@ -70,9 +70,9 @@ class Grid<T> {
   Grid.filled(this.length, this.height, T value)
       : list = List.filled(length * height, value, growable: false);
   Grid.copy(Grid<T> grid)
-      : this.length = grid.length,
-        this.height = grid.height,
-        this.list = grid.list.toList(growable: false);
+      : length = grid.length,
+        height = grid.height,
+        list = grid.list.toList(growable: false);
 
   T get(int x, int y) => list[_getPos(x, y)];
   void set(int x, int y, T value) => list[_getPos(x, y)] = value;
@@ -84,7 +84,7 @@ class SeatLayout extends Grid<SeatState> {
   SeatLayout.filled(int length, int height)
       : super.filled(length, height, SeatState.floor);
 
-  SeatLayout.copy(SeatLayout seatLayout) : super.copy(seatLayout);
+  SeatLayout.copy(SeatLayout super.seatLayout) : super.copy();
 
   factory SeatLayout.parse(Iterable<String> lines) {
     final List<List<SeatState>> seats = [];
@@ -121,13 +121,13 @@ class SeatLayout extends Grid<SeatState> {
     return seatLayout;
   }
 
-  int countOccupiedNeighbours(int x, int y) {
+  int countOccupiedNeighbours(int inputX, int inputY) {
     var count = 0;
 
-    for (var _y = y - 1; _y <= y + 1; _y++) {
-      for (var _x = x - 1; _x <= x + 1; _x++) {
-        if (_x == x && _y == y) continue;
-        if (get(_x, _y) == SeatState.occupied) count++;
+    for (var y = inputY - 1; y <= inputY + 1; y++) {
+      for (var x = inputX - 1; x <= inputX + 1; x++) {
+        if (x == inputX && y == inputY) continue;
+        if (get(x, y) == SeatState.occupied) count++;
       }
     }
 
@@ -152,11 +152,16 @@ class SeatLayout extends Grid<SeatState> {
       // left
       countOccupiedTheyCanSeeInDirection(x, y, -1, 0);
 
-  int countOccupiedTheyCanSeeInDirection(int x, int y, int dx, int dy) {
-    for (var _x = x + dx, _y = y + dy;
-        _x >= 0 && _x < length && _y >= 0 && _y < height;
-        _x += dx, _y += dy) {
-      final seatState = get(_x, _y);
+  int countOccupiedTheyCanSeeInDirection(
+    int inputX,
+    int inputY,
+    int dx,
+    int dy,
+  ) {
+    for (var x = inputX + dx, y = inputY + dy;
+        x >= 0 && x < length && y >= 0 && y < height;
+        x += dx, y += dy) {
+      final seatState = get(x, y);
 
       if (seatState == SeatState.occupied) {
         return 1;

@@ -84,11 +84,16 @@ class Input {
 
 class Rule {
   final String name;
-  final int interval1_min, interval1_max;
-  final int interval2_min, interval2_max;
+  final int interval1Min, interval1Max;
+  final int interval2Min, interval2Max;
 
-  const Rule(this.name, this.interval1_min, this.interval1_max,
-      this.interval2_min, this.interval2_max);
+  const Rule(
+    this.name,
+    this.interval1Min,
+    this.interval1Max,
+    this.interval2Min,
+    this.interval2Max,
+  );
 
   static final _pattern = RegExp(
       r'(?<name>.*): (?<min1>\d+)-(?<max1>\d+) or (?<min2>\d+)-(?<max2>\d+)');
@@ -105,12 +110,12 @@ class Rule {
   }
 
   bool valid(int number) =>
-      (number >= interval1_min && number <= interval1_max) ||
-      (number >= interval2_min && number <= interval2_max);
+      (number >= interval1Min && number <= interval1Max) ||
+      (number >= interval2Min && number <= interval2Max);
 
   bool validTicket(Iterable<int> ticket) => ticket.every(valid);
 
   @override
   String toString() =>
-      "$name: $interval1_min-$interval1_max or $interval2_min-$interval2_max";
+      "$name: $interval1Min-$interval1Max or $interval2Min-$interval2Max";
 }

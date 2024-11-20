@@ -52,8 +52,8 @@ int chineseRemainder(List<int> n, List<int> a) {
   return sm % prod;
 }
 
-int mulInv(int _a, int _b) {
-  var a = _a, b = _b;
+int mulInv(int inputA, int inputB) {
+  var a = inputA, b = inputB;
   final b0 = b;
   var x0 = 0;
   var x1 = 1;

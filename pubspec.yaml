@@ -3,11 +3,11 @@ description: Solutions for Advent of Code 2020.
 version: 0.0.1
 
 environment:
-  sdk: ">=2.14.0-0 <3.0.0"
+  sdk: "^3.5.0"
 
 dependencies:
-  equatable: ^2.0.3
+  equatable: ^2.0.0
 
 dev_dependencies:
-  extra_pedantic: ^1.5.0
-  test: ^1.19.3
+  lints: ^4.0.0
+  test: ^1.25.0
