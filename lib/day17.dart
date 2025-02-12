@@ -28,8 +28,11 @@ int solve(List<String> input, int dimensions) {
         if (activeCubes.contains(neighbour)) {
           numberOfActiveNeighbours++;
         } else {
-          visitedNonActiveCubes.update(neighbour, (count) => count + 1,
-              ifAbsent: () => 1);
+          visitedNonActiveCubes.update(
+            neighbour,
+            (count) => count + 1,
+            ifAbsent: () => 1,
+          );
         }
       }
 
@@ -38,9 +41,11 @@ int solve(List<String> input, int dimensions) {
       }
     }
 
-    newActiveCubes.addAll(visitedNonActiveCubes.entries
-        .where((e) => e.value == 3)
-        .map((e) => e.key));
+    newActiveCubes.addAll(
+      visitedNonActiveCubes.entries
+          .where((e) => e.value == 3)
+          .map((e) => e.key),
+    );
 
     activeCubes = newActiveCubes;
   }
@@ -53,9 +58,9 @@ class Point extends Equatable {
 
   const Point(this.dimensions);
 
-  Iterable<Point> get neighbours =>
-      combinations(dimensions.toList(growable: false))
-          .where((point) => point != this);
+  Iterable<Point> get neighbours => combinations(
+    dimensions.toList(growable: false),
+  ).where((point) => point != this);
 
   Iterable<Point> combinations(List<int> input, [int i = 0]) sync* {
     if (i == input.length) {

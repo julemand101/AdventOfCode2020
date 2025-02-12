@@ -9,8 +9,9 @@ class Instruction {
 
   Instruction(this.operation, this.argument);
 
-  static final _instructionRegExp =
-      RegExp(r'(?<operation>acc|jmp|nop) (?<argument>[+-]\d+)');
+  static final _instructionRegExp = RegExp(
+    r'(?<operation>acc|jmp|nop) (?<argument>[+-]\d+)',
+  );
 
   factory Instruction.parse(String line) {
     final match = _instructionRegExp.firstMatch(line)!;
@@ -48,12 +49,14 @@ class Result {
 }
 
 int solveA(Iterable<String> input) =>
-    run(input.map((line) => Instruction.parse(line)).toList(growable: false))
-        .accumulator;
+    run(
+      input.map((line) => Instruction.parse(line)).toList(growable: false),
+    ).accumulator;
 
 int solveB(Iterable<String> input) {
-  final program =
-      input.map((line) => Instruction.parse(line)).toList(growable: false);
+  final program = input
+      .map((line) => Instruction.parse(line))
+      .toList(growable: false);
 
   for (var i = 0; i < program.length; i++) {
     final instruction = program[i];

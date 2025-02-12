@@ -9,9 +9,12 @@ int solveB(Iterable<String> input) {
   final validRulesForEachColumn = [
     for (var i = 0; i < parsedInput.yourTicket.length; i++)
       parsedInput.ticketFieldRules
-          .where((rule) => rule.validTicket(
-              parsedInput.validNearbyTickets.map((ticket) => ticket[i])))
-          .toList()
+          .where(
+            (rule) => rule.validTicket(
+              parsedInput.validNearbyTickets.map((ticket) => ticket[i]),
+            ),
+          )
+          .toList(),
   ];
 
   while (validRulesForEachColumn.any((column) => column.length != 1)) {
@@ -73,13 +76,16 @@ class Input {
       ticketFieldRules.any((rule) => rule.validTicket(ticket));
 
   int getTicketScanningErrorRate() => invalidNearbyTickets.fold<int>(
-      0,
-      (sum, ticket) =>
-          sum +
-          ticket
-              .where((ticketField) =>
-                  ticketFieldRules.every((rule) => !rule.valid(ticketField)))
-              .fold(0, (a, b) => a + b));
+    0,
+    (sum, ticket) =>
+        sum +
+        ticket
+            .where(
+              (ticketField) =>
+                  ticketFieldRules.every((rule) => !rule.valid(ticketField)),
+            )
+            .fold(0, (a, b) => a + b),
+  );
 }
 
 class Rule {
@@ -96,17 +102,19 @@ class Rule {
   );
 
   static final _pattern = RegExp(
-      r'(?<name>.*): (?<min1>\d+)-(?<max1>\d+) or (?<min2>\d+)-(?<max2>\d+)');
+    r'(?<name>.*): (?<min1>\d+)-(?<max1>\d+) or (?<min2>\d+)-(?<max2>\d+)',
+  );
 
   factory Rule.parse(String input) {
     final match = _pattern.firstMatch(input)!;
 
     return Rule(
-        match.namedGroup('name')!,
-        int.parse(match.namedGroup('min1')!),
-        int.parse(match.namedGroup('max1')!),
-        int.parse(match.namedGroup('min2')!),
-        int.parse(match.namedGroup('max2')!));
+      match.namedGroup('name')!,
+      int.parse(match.namedGroup('min1')!),
+      int.parse(match.namedGroup('max1')!),
+      int.parse(match.namedGroup('min2')!),
+      int.parse(match.namedGroup('max2')!),
+    );
   }
 
   bool valid(int number) =>

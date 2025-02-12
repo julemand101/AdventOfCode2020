@@ -22,12 +22,16 @@ void main() {
       expect(solveA(const ['5 + (8 * 3 + 9 + 3 * 4 * 3)']), equals(437));
     });
     test('Example 5', () {
-      expect(solveA(const ['5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))']),
-          equals(12240));
+      expect(
+        solveA(const ['5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))']),
+        equals(12240),
+      );
     });
     test('Example 6', () {
-      expect(solveA(const ['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2']),
-          equals(13632));
+      expect(
+        solveA(const ['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2']),
+        equals(13632),
+      );
     });
     test('Solution', () {
       expect(solveA(input), equals(2743012121210));
@@ -47,12 +51,16 @@ void main() {
       expect(solveB(const ['5 + (8 * 3 + 9 + 3 * 4 * 3)']), equals(1445));
     });
     test('Example 5', () {
-      expect(solveB(const ['5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))']),
-          equals(669060));
+      expect(
+        solveB(const ['5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))']),
+        equals(669060),
+      );
     });
     test('Example 6', () {
-      expect(solveB(const ['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2']),
-          equals(23340));
+      expect(
+        solveB(const ['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2']),
+        equals(23340),
+      );
     });
     test('Solution', () {
       expect(solveB(input), equals(65658760783597));

@@ -3,7 +3,7 @@
 
 int solveA(Iterable<String> input) {
   final tiles = [
-    for (final splitInput in parseInput(input)) Tile.parse(splitInput)
+    for (final splitInput in parseInput(input)) Tile.parse(splitInput),
   ];
 
   for (final tileA in tiles) {
@@ -28,10 +28,7 @@ class Tile {
   final Set<int> sides;
   final Set<Tile> neighbours = {};
 
-  Tile(
-    this.tileId, {
-    required this.sides,
-  });
+  Tile(this.tileId, {required this.sides});
 
   factory Tile.parse(List<String> input) {
     // Tile 2311:

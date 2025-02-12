@@ -8,10 +8,12 @@ int solveA(Iterable<String> input) => input
 
 int solveB(Iterable<String> input) => input
     .map((e) => e.replaceAll(' ', ''))
-    .map((line) => calculate(line, (tokens) {
-          final index = tokens.indexOf(const Operator(Mode.addition));
-          return index != -1 ? index : 1;
-        }))
+    .map(
+      (line) => calculate(line, (tokens) {
+        final index = tokens.indexOf(const Operator(Mode.addition));
+        return index != -1 ? index : 1;
+      }),
+    )
     .reduce((a, b) => a + b);
 
 abstract class Token {
@@ -83,11 +85,13 @@ int calculate(String line, int Function(List<Token> tokens) findOperator) {
     final operator = tokens[indexOperator] as Operator;
 
     if (operator.mode == Mode.addition) {
-      tokens.replaceRange(
-          indexOperator - 1, indexOperator + 2, [aValue + bValue]);
+      tokens.replaceRange(indexOperator - 1, indexOperator + 2, [
+        aValue + bValue,
+      ]);
     } else {
-      tokens.replaceRange(
-          indexOperator - 1, indexOperator + 2, [aValue * bValue]);
+      tokens.replaceRange(indexOperator - 1, indexOperator + 2, [
+        aValue * bValue,
+      ]);
     }
   }
 

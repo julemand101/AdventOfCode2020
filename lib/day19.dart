@@ -28,8 +28,10 @@ int solve(List<String> input, {required bool partB}) {
       if (split1[1].contains('|')) {
         to = split1[1]
             .split(' | ')
-            .map((split) =>
-                split.split(' ').map(int.parse).toList(growable: false))
+            .map(
+              (split) =>
+                  split.split(' ').map(int.parse).toList(growable: false),
+            )
             .toList(growable: false);
       } else {
         to = [split1[1].split(' ').map(int.parse).toList(growable: false)];
@@ -42,27 +44,41 @@ int solve(List<String> input, {required bool partB}) {
   if (partB) {
     numberRules[8] = [
       [42],
-      [42, 8]
+      [42, 8],
     ];
 
     numberRules[11] = [
       [42, 31],
-      [42, 11, 31]
+      [42, 11, 31],
     ];
   }
 
   return messages
-      .map((msg) => [
-            for (var i = 0; i < msg.length; i++)
-              msg[i] == 'a' ? letterA : letterB
-          ])
-      .where((receivedMessage) => valid(receivedMessage, numberRules[0]!.first,
-          numberRules, letterA, letterB))
+      .map(
+        (msg) => [
+          for (var i = 0; i < msg.length; i++)
+            msg[i] == 'a' ? letterA : letterB,
+        ],
+      )
+      .where(
+        (receivedMessage) => valid(
+          receivedMessage,
+          numberRules[0]!.first,
+          numberRules,
+          letterA,
+          letterB,
+        ),
+      )
       .length;
 }
 
-bool valid(List<int> receivedMessage, List<int> work,
-    Map<int, List<List<int>>> numberRules, int letterA, int letterB) {
+bool valid(
+  List<int> receivedMessage,
+  List<int> work,
+  Map<int, List<List<int>>> numberRules,
+  int letterA,
+  int letterB,
+) {
   if (equalLists(receivedMessage, work)) return true;
 
   final index = indexOfFirstDifference(receivedMessage, work);
@@ -73,11 +89,12 @@ bool valid(List<int> receivedMessage, List<int> work,
 
   for (final numberRule in numberRules[work[index]]!) {
     if (valid(
-        receivedMessage,
-        work.toList()..replaceRange(index, index + 1, numberRule),
-        numberRules,
-        letterA,
-        letterB)) {
+      receivedMessage,
+      work.toList()..replaceRange(index, index + 1, numberRule),
+      numberRules,
+      letterA,
+      letterB,
+    )) {
       return true;
     }
   }

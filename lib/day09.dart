@@ -6,7 +6,9 @@ import 'dart:math';
 
 int solveA(Iterable<String> input, {int preambleSize = 25}) =>
     findFirstWrongNumber(
-        input.map(int.parse).toList(growable: false), preambleSize);
+      input.map(int.parse).toList(growable: false),
+      preambleSize,
+    );
 
 int solveB(Iterable<String> input, {int preambleSize = 25}) {
   final list = input.map(int.parse).toList(growable: false);

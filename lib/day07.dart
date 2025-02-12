@@ -62,8 +62,11 @@ int solveB(Iterable<String> input) {
 
         if (bagMap.containsKey(bagColor)) {
           final map = bagMap[bagColor]!;
-          map.update(subBagColor, (count) => count + subBagCount,
-              ifAbsent: () => subBagCount);
+          map.update(
+            subBagColor,
+            (count) => count + subBagCount,
+            ifAbsent: () => subBagCount,
+          );
         } else {
           bagMap[bagColor] = {subBagColor: subBagCount};
         }
@@ -80,9 +83,9 @@ int calcBags(Map<String, Map<String, int>> bagMap, Map<String, int> wants) {
   for (final wantsEntry in wants.entries) {
     final bagColor = wantsEntry.key;
     final bagCount = wantsEntry.value;
-    final needs = Map.fromEntries(bagMap[bagColor]!
-        .entries
-        .map((e) => MapEntry(e.key, e.value * bagCount)));
+    final needs = Map.fromEntries(
+      bagMap[bagColor]!.entries.map((e) => MapEntry(e.key, e.value * bagCount)),
+    );
 
     if (needs.isNotEmpty) {
       sum += calcBags(bagMap, needs);

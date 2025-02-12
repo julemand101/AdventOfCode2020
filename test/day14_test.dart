@@ -11,13 +11,14 @@ void main() {
   group('Part One', () {
     test('Example 1', () {
       expect(
-          solveA(const [
-            'mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X',
-            'mem[8] = 11',
-            'mem[7] = 101',
-            'mem[8] = 0]'
-          ]),
-          equals(165));
+        solveA(const [
+          'mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X',
+          'mem[8] = 11',
+          'mem[7] = 101',
+          'mem[8] = 0]',
+        ]),
+        equals(165),
+      );
     });
     test('Solution', () {
       expect(solveA(input), equals(14722016054794));
@@ -26,13 +27,14 @@ void main() {
   group('Part One', () {
     test('Example 1', () {
       expect(
-          solveB(const [
-            'mask = 000000000000000000000000000000X1001X',
-            'mem[42] = 100',
-            'mask = 00000000000000000000000000000000X0XX',
-            'mem[26] = 1'
-          ]),
-          equals(208));
+        solveB(const [
+          'mask = 000000000000000000000000000000X1001X',
+          'mem[42] = 100',
+          'mask = 00000000000000000000000000000000X0XX',
+          'mem[26] = 1',
+        ]),
+        equals(208),
+      );
     });
     test('Solution', () {
       expect(solveB(input), equals(3618217244644));

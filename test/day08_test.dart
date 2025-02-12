@@ -11,18 +11,19 @@ void main() {
   group('Part One', () {
     test('Example 1', () {
       expect(
-          solveA(const [
-            'nop +0',
-            'acc +1',
-            'jmp +4',
-            'acc +3',
-            'jmp -3',
-            'acc -99',
-            'acc +1',
-            'jmp -4',
-            'acc +6'
-          ]),
-          equals(5));
+        solveA(const [
+          'nop +0',
+          'acc +1',
+          'jmp +4',
+          'acc +3',
+          'jmp -3',
+          'acc -99',
+          'acc +1',
+          'jmp -4',
+          'acc +6',
+        ]),
+        equals(5),
+      );
     });
     test('Solution', () {
       expect(solveA(input), equals(1317));
@@ -31,18 +32,19 @@ void main() {
   group('Part Two', () {
     test('Example 1', () {
       expect(
-          solveB(const [
-            'nop +0',
-            'acc +1',
-            'jmp +4',
-            'acc +3',
-            'jmp -3',
-            'acc -99',
-            'acc +1',
-            'jmp -4',
-            'acc +6'
-          ]),
-          equals(8));
+        solveB(const [
+          'nop +0',
+          'acc +1',
+          'jmp +4',
+          'acc +3',
+          'jmp -3',
+          'acc -99',
+          'acc +1',
+          'jmp -4',
+          'acc +6',
+        ]),
+        equals(8),
+      );
     });
     test('Solution', () {
       expect(solveB(input), equals(1033));

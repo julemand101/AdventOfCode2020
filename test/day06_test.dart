@@ -11,24 +11,25 @@ void main() {
   group('Part One', () {
     test('Example 1', () {
       expect(
-          solveA(const [
-            'abc',
-            '',
-            'a',
-            'b',
-            'c',
-            '',
-            'ab',
-            'ac',
-            '',
-            'a',
-            'a',
-            'a',
-            'a',
-            '',
-            'b'
-          ]),
-          equals(11));
+        solveA(const [
+          'abc',
+          '',
+          'a',
+          'b',
+          'c',
+          '',
+          'ab',
+          'ac',
+          '',
+          'a',
+          'a',
+          'a',
+          'a',
+          '',
+          'b',
+        ]),
+        equals(11),
+      );
     });
     test('Solution', () {
       expect(solveA(input), equals(6416));
@@ -37,24 +38,25 @@ void main() {
   group('Part Two', () {
     test('Example 1', () {
       expect(
-          solveB(const [
-            'abc',
-            '',
-            'a',
-            'b',
-            'c',
-            '',
-            'ab',
-            'ac',
-            '',
-            'a',
-            'a',
-            'a',
-            'a',
-            '',
-            'b'
-          ]),
-          equals(6));
+        solveB(const [
+          'abc',
+          '',
+          'a',
+          'b',
+          'c',
+          '',
+          'ab',
+          'ac',
+          '',
+          'a',
+          'a',
+          'a',
+          'a',
+          '',
+          'b',
+        ]),
+        equals(6),
+      );
     });
     test('Solution', () {
       expect(solveB(input), equals(3050));

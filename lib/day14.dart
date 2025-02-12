@@ -29,9 +29,9 @@ int solveA(Iterable<String> input) {
     } else {
       final match = memoryValueRegExp.firstMatch(line)!;
       final address = int.parse(match.namedGroup('address')!);
-      final value = int.parse(match.namedGroup('value')!)
-          .toRadixString(2)
-          .padLeft(36, '0');
+      final value = int.parse(
+        match.namedGroup('value')!,
+      ).toRadixString(2).padLeft(36, '0');
 
       final buffer = StringBuffer();
       for (var i = 0; i < value.length; i++) {
@@ -74,9 +74,9 @@ int solveB(Iterable<String> input) {
       }
     } else {
       final match = memoryValueRegExp.firstMatch(line)!;
-      final addressBinaryString = int.parse(match.namedGroup('address')!)
-          .toRadixString(2)
-          .padLeft(36, '0');
+      final addressBinaryString = int.parse(
+        match.namedGroup('address')!,
+      ).toRadixString(2).padLeft(36, '0');
 
       final value = int.parse(match.namedGroup('value')!);
       final address = List<bool?>.generate(addressBinaryString.length, (i) {
@@ -97,8 +97,12 @@ int solveB(Iterable<String> input) {
   return memory.values.reduce((a, b) => a + b);
 }
 
-void setMemory(List<bool?> address, Map<int, int> memory, int value,
-    {int pos = 0}) {
+void setMemory(
+  List<bool?> address,
+  Map<int, int> memory,
+  int value, {
+  int pos = 0,
+}) {
   var foundX = false;
 
   for (var i = pos; i < address.length; i++) {

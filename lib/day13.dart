@@ -31,13 +31,14 @@ int solveB(List<String> input) {
       .toList(growable: false);
 
   return chineseRemainder(
-      busses.where((busId) => busId > 0).toList(growable: false),
-      busses
-          .asMap()
-          .entries
-          .where((entry) => entry.value > 0)
-          .map((entry) => (entry.value - entry.key) % entry.value)
-          .toList(growable: false));
+    busses.where((busId) => busId > 0).toList(growable: false),
+    busses
+        .asMap()
+        .entries
+        .where((entry) => entry.value > 0)
+        .map((entry) => (entry.value - entry.key) % entry.value)
+        .toList(growable: false),
+  );
 }
 
 // Converted from https://rosettacode.org/wiki/Chinese_remainder_theorem#Java

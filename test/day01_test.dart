@@ -10,8 +10,10 @@ final input = File('test/data/day01.txt').readAsLinesSync();
 void main() {
   group('Part One', () {
     test('Example 1', () {
-      expect(solveA(const ['1721', '979', '366', '299', '675', '1456']),
-          equals(514579));
+      expect(
+        solveA(const ['1721', '979', '366', '299', '675', '1456']),
+        equals(514579),
+      );
     });
     test('Solution', () {
       expect(solveA(input), equals(972576));
@@ -19,8 +21,10 @@ void main() {
   });
   group('Part Two', () {
     test('Example 1', () {
-      expect(solveB(const ['1721', '979', '366', '299', '675', '1456']),
-          equals(241861950));
+      expect(
+        solveB(const ['1721', '979', '366', '299', '675', '1456']),
+        equals(241861950),
+      );
     });
     test('Solution', () {
       expect(solveB(input), equals(199300880));

@@ -68,11 +68,11 @@ class Grid<T> {
   final List<T> list;
 
   Grid.filled(this.length, this.height, T value)
-      : list = List.filled(length * height, value, growable: false);
+    : list = List.filled(length * height, value, growable: false);
   Grid.copy(Grid<T> grid)
-      : length = grid.length,
-        height = grid.height,
-        list = grid.list.toList(growable: false);
+    : length = grid.length,
+      height = grid.height,
+      list = grid.list.toList(growable: false);
 
   T get(int x, int y) => list[_getPos(x, y)];
   void set(int x, int y, T value) => list[_getPos(x, y)] = value;
@@ -82,7 +82,7 @@ class Grid<T> {
 
 class SeatLayout extends Grid<SeatState> {
   SeatLayout.filled(int length, int height)
-      : super.filled(length, height, SeatState.floor);
+    : super.filled(length, height, SeatState.floor);
 
   SeatLayout.copy(SeatLayout super.seatLayout) : super.copy();
 
@@ -158,9 +158,11 @@ class SeatLayout extends Grid<SeatState> {
     int dx,
     int dy,
   ) {
-    for (var x = inputX + dx, y = inputY + dy;
-        x >= 0 && x < length && y >= 0 && y < height;
-        x += dx, y += dy) {
+    for (
+      var x = inputX + dx, y = inputY + dy;
+      x >= 0 && x < length && y >= 0 && y < height;
+      x += dx, y += dy
+    ) {
       final seatState = get(x, y);
 
       if (seatState == SeatState.occupied) {
