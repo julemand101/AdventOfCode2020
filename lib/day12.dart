@@ -12,10 +12,9 @@ const directionMap = {
 
 const facingMap = {0: 'E', 90: 'S', 180: 'W', 270: 'N'};
 
-Point<int> rotate(Point<int> point, int degrees) =>
-    (degrees % 360 == 0)
-        ? point
-        : rotate(Point(point.y * -1, point.x), (degrees % 360) - 90);
+Point<int> rotate(Point<int> point, int degrees) => (degrees % 360 == 0)
+    ? point
+    : rotate(Point(point.y * -1, point.x), (degrees % 360) - 90);
 
 int solveA(Iterable<String> input) {
   var position = const Point(0, 0);

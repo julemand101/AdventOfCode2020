@@ -48,10 +48,9 @@ class Result {
   const Result(this.accumulator, this.programTerminated);
 }
 
-int solveA(Iterable<String> input) =>
-    run(
-      input.map((line) => Instruction.parse(line)).toList(growable: false),
-    ).accumulator;
+int solveA(Iterable<String> input) => run(
+  input.map((line) => Instruction.parse(line)).toList(growable: false),
+).accumulator;
 
 int solveB(Iterable<String> input) {
   final program = input

@@ -1,15 +1,13 @@
 // --- Day 4: Passport Processing ---
 // https://adventofcode.com/2020/day/4
 
-int solveA(Iterable<String> input) =>
-    Passport.parseInput(
-      input,
-    ).where((passport) => passport.isValidPartOne).length;
+int solveA(Iterable<String> input) => Passport.parseInput(
+  input,
+).where((passport) => passport.isValidPartOne).length;
 
-int solveB(Iterable<String> input) =>
-    Passport.parseInput(
-      input,
-    ).where((passport) => passport.isValidPartTwo).length;
+int solveB(Iterable<String> input) => Passport.parseInput(
+  input,
+).where((passport) => passport.isValidPartTwo).length;
 
 class Passport {
   int? byr, iyr, eyr;
